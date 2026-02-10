@@ -1,5 +1,6 @@
 import { getUser } from "@/actions/user";
 import AvatarUser from "@/components/AvatarUser";
+import AddProductForm from "@/components/espace/ajouter/AddProductForm";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -36,8 +37,15 @@ async function page() {
 
       {/* container */}
       <div className="p-4">
-        <h1 className="text-2xl font-bold mb-4">Ajouter un produit</h1>
+        <h1 className="text-2xl font-bold mb-1">Ajouter un produit</h1>
+        <p className="text-xs max-w-md mb-4">
+          Ici, vous pouvez ajouter un nouveau produit à votre boutique.
+          Remplissez les informations nécessaires et cliquez sur{" "}
+          <strong>Enregistrer</strong>r pour partager votre produit avec la
+          communauté.
+        </p>
         {/* form */}
+        <AddProductForm />
       </div>
     </div>
   );

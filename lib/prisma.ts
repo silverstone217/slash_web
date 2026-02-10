@@ -16,7 +16,7 @@ const pool = new Pool({
 const adapter = new PrismaPg(pool);
 
 // 3. Création de l'instance unique
-const prisma =
+export const prisma =
   global.prisma ||
   new PrismaClient({
     // 💡 NOUVEAU : On passe l'instance de l'adaptateur au lieu de l'URL
@@ -27,5 +27,3 @@ const prisma =
 if (process.env.NODE_ENV !== "production") {
   global.prisma = prisma;
 }
-
-export { prisma };
