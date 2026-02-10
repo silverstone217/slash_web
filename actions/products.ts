@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 
+// ADD PRODUCT
 export const addProduct = async (formData: ProductAddInput) => {
   try {
     // is user authenticated ? if not throw error
@@ -79,6 +80,7 @@ export const addProduct = async (formData: ProductAddInput) => {
   }
 };
 
+// UPLOAD IMAGE
 export const uploadProductImage = async (formData: FormData) => {
   try {
     const imageFile = formData.get("image") as File;
@@ -131,4 +133,17 @@ export const uploadProductImage = async (formData: FormData) => {
       newproductId: null,
     };
   }
+};
+
+// GET PRODUCTS
+
+export const getProducts = async () => {
+  const user = await getUser();
+  if (!user) return [];
+
+  const prods = prisma.product.findMany({
+    where: { userId: user.id },
+  });
+
+  return prods ?? [];
 };
