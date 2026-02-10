@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
-import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { inconsolata, rubik } from "@/lib/fonts";
-import { frFR } from "@clerk/localizations";
+import AuthProvider from "@/components/providers/AuthProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Slash - Scroller pour des produits",
   description: "Enregisterer et partager des produits que vous aimez",
 };
-
-const localization = frFR;
 
 export default function RootLayout({
   children,
@@ -21,7 +19,10 @@ export default function RootLayout({
       <body
         className={`${inconsolata.className} ${rubik.variable} antialiased`}
       >
-        <ClerkProvider localization={localization}>{children}</ClerkProvider>
+        <AuthProvider>
+          <main>{children}</main>
+          <Toaster />
+        </AuthProvider>
       </body>
     </html>
   );

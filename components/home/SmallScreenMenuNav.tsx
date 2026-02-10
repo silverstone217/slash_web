@@ -13,8 +13,11 @@ import { RiMenu3Fill } from "react-icons/ri";
 import { HomeLinks } from "@/utils/links";
 import Link from "next/link";
 import { Separator } from "../ui/separator";
+import { useCurrentUser } from "@/hooks/UserAuth";
+import AvatarUser from "../AvatarUser";
 
 const SmallScreenMenuNav = () => {
+  const user = useCurrentUser();
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -25,8 +28,25 @@ const SmallScreenMenuNav = () => {
       <PopoverContent className="w-full flex flex-col gap-4">
         <PopoverHeader>
           {/* login / logout */}
-          <PopoverTitle>USER</PopoverTitle>
-          <PopoverDescription>@user</PopoverDescription>
+          {user ? (
+            <div className="flex items-center gap-2">
+              <AvatarUser src={user.image} fallback={user.name} />
+              <div>
+                <PopoverTitle className="font-semibold">
+                  {user?.name || "USER"}
+                </PopoverTitle>
+                <PopoverDescription className="text-xs text-gray-400">
+                  {user?.email || "user@example.com"}
+                </PopoverDescription>
+              </div>
+            </div>
+          ) : (
+            <Link href="/auth/connection">
+              <Button variant="outline" size="sm">
+                Se connecter
+              </Button>
+            </Link>
+          )}
         </PopoverHeader>
 
         <Separator />

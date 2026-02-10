@@ -5,15 +5,12 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
 import SmallScreenMenuNav from "./SmallScreenMenuNav";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-} from "@clerk/nextjs";
+import { useCurrentUser } from "@/hooks/UserAuth";
+import AvatarUser from "../AvatarUser";
 
 const Header = () => {
+  const user = useCurrentUser();
+
   return (
     <header
       className="fixed top-0 left-0 right-0 border-b-2 shadow z-40
@@ -66,19 +63,17 @@ const Header = () => {
           </div>
 
           {/* SIGN OUT / UP */}
-          <SignedOut>
-            <SignInButton>
-              <Button variant="outline" size="sm" className="hidden md:block">
-                Se connecter
-              </Button>
-            </SignInButton>
-            {/* <SignUpButton></SignUpButton> */}
-          </SignedOut>
-
-          {/* SIGN IN */}
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+          <div className="hidden md:block">
+            {user ? (
+              <AvatarUser src={user.image} fallback={user.name} />
+            ) : (
+              <Link href="/auth/connection">
+                <Button variant="outline" size="sm">
+                  Se connecter
+                </Button>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </header>
