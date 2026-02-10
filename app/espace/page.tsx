@@ -1,5 +1,7 @@
 import { getProducts } from "@/actions/products";
 import { getUser } from "@/actions/user";
+import { columns } from "@/components/espace/lists/colums";
+import { DataTable } from "@/components/espace/lists/data-table";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
@@ -27,8 +29,8 @@ async function page() {
       </Link>
 
       {/* Lists */}
-      <div>
-        <p>Nombres: {products.length}</p>
+      <div className="mt-10 flex flex-col">
+        <DataTable columns={columns} data={products} />
       </div>
     </div>
   );
