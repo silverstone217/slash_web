@@ -2,11 +2,16 @@
   "name": "slash_web",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "email": "stephuni35@gmail.com",
+    "name": "Stephane Mfuni"
+  },
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "postinstall": "prisma generate",
+    "lint": "next lint"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
