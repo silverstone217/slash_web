@@ -28,7 +28,7 @@ export const columns: ColumnDef<ProductSerialized>[] = [
           priority={true}
           width={40}
           height={40}
-          className="object-cover rounded-sm"
+          className="object-cover rounded-sm size-10"
         />
       );
     },
@@ -38,12 +38,20 @@ export const columns: ColumnDef<ProductSerialized>[] = [
     header: "Name",
     cell: ({ row }) => {
       const prod = row.original;
-      return <span className="capitalize font-medium">{prod.name}</span>;
+      return (
+        <span className="capitalize font-medium w-36 truncate line-clamp-2">
+          {prod.name}
+        </span>
+      );
     },
   },
   {
     accessorKey: "stock",
-    header: "Quantité",
+    header: () => <span className="text-center">Quantité</span>,
+    cell: ({ row }) => {
+      const prod = row.original;
+      return <span className="text-center">{prod.stock}</span>;
+    },
   },
   {
     accessorKey: "price",

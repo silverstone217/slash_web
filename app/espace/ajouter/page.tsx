@@ -16,7 +16,7 @@ async function page() {
         <p className="text-xs max-w-md mb-4">
           Ici, vous pouvez ajouter un nouveau produit à votre boutique.
           Remplissez les informations nécessaires et cliquez sur{" "}
-          <strong>Enregistrer</strong>r pour partager votre produit avec la
+          <strong>Enregistrer</strong> pour partager votre produit avec la
           communauté.
         </p>
         {/* form */}

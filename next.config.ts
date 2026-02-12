@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
     // next-auth and db api keys
     SECRET_KEY: process.env.SECRET_KEY,
     DATABASE_URL: process.env.DATABASE_URL,
+
+    // DEFAULT VAR
+    DEFAULT_IMAGE_PRODUCT: process.env.DEFAULT_IMAGE_PRODUCT,
   },
 
   images: {
