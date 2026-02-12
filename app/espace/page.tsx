@@ -3,6 +3,7 @@ import { getUser } from "@/actions/user";
 import { columns } from "@/components/espace/lists/colums";
 import { DataTable } from "@/components/espace/lists/data-table";
 import { Button } from "@/components/ui/button";
+import { ProductSerialized } from "@/types/products";
 import Link from "next/link";
 import React from "react";
 
@@ -11,7 +12,7 @@ async function page() {
 
   if (!user) return null;
 
-  const products = await getProducts();
+  const products = (await getProducts()) as unknown as ProductSerialized[];
 
   return (
     <div className="p-4">

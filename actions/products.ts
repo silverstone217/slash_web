@@ -6,6 +6,7 @@ import { Category, Currency, Target } from "@/lib/generated/prisma/enums";
 import { prisma } from "@/lib/prisma";
 import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
+import { del } from "@vercel/blob";
 
 // ADD PRODUCT
 export const addProduct = async (formData: ProductAddInput) => {
@@ -141,9 +142,80 @@ export const getProducts = async () => {
   const user = await getUser();
   if (!user) return [];
 
-  const prods = prisma.product.findMany({
+  const prods = await prisma.product.findMany({
     where: { userId: user.id },
   });
 
-  return prods ?? [];
+  const products = prods.map((p) => ({
+    ...p,
+    price: Number(p.price),
+    promoPrice: p.promoPrice ? Number(p.promoPrice) : null,
+  }));
+
+  return products ?? [];
 };
+
+// DELETE PRODUCT
+export const deleteProductById = async (id: string) => {
+  try {
+    // auth user
+    const user = await getUser();
+    if (!user || user.isBanned) {
+      return {
+        error: true,
+        message: "Vous n'etes pas authentifié ou vous avez été bloqué!",
+      };
+    }
+
+    // get product
+    const product = await prisma.product.findUnique({
+      where: { id },
+    });
+
+    if (!product)
+      return {
+        error: true,
+        message: "Produit introuvalbe",
+      };
+
+    // check owner
+    if (product.userId !== user.id) {
+      return {
+        error: true,
+        message: "Non autorisé",
+      };
+    }
+
+    // delete prod
+    await prisma.product.delete({
+      where: {
+        id,
+      },
+    });
+
+    // delete image to vercel blob
+    if (
+      product.image !==
+      "https://3eqaz12yan4rgf7v.public.blob.vercel-storage.com/products/noimage.png"
+    ) {
+      await deleteImage(product.image);
+    }
+
+    revalidatePath("/espace");
+    return {
+      error: false,
+      message: "Produit supprimé!",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      error: true,
+      message: "Impossible de supprimer",
+    };
+  }
+};
+
+// DELETE IMG
+export async function deleteImage(imageUrl: string) {
+  await del(imageUrl);
+}

@@ -1,10 +1,10 @@
 "use client";
-
-import { Product } from "@/lib/generated/prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
+import ActionList from "./ActionList";
+import { ProductSerialized } from "@/types/products";
 
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<ProductSerialized>[] = [
   {
     accessorKey: "id",
     header: "No",
@@ -58,6 +58,20 @@ export const columns: ColumnDef<Product>[] = [
       }).format(amount);
 
       return <div className="text-right font-semibold">{formatted}</div>;
+    },
+  },
+
+  {
+    id: "actions",
+    header: () => <div className="text-right">Actions</div>,
+    cell: ({ row }) => {
+      const product = row.original;
+
+      return (
+        <div className="flex items-center justify-end">
+          <ActionList product={product} />
+        </div>
+      );
     },
   },
 ];
