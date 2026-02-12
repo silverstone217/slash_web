@@ -1,5 +1,6 @@
 import { getUser } from "@/actions/user";
 import AvatarUser from "@/components/AvatarUser";
+import ReturnButton from "@/components/espace/ReturnButton";
 import UrlPage from "@/components/UrlPage";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -16,25 +17,11 @@ async function layout({ children }: Props) {
   if (!user) return redirect("/auth/connection");
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen w-full">
       {/* HEADER */}
-      <header className="p-4 border-b-2 shadow flex items-center justify-between">
+      <header className="p-4 border-b-2 shadow flex items-center justify-between w-full">
         {/* link  */}
-        <Link
-          href={"/"}
-          className=" flex items-center group 
-             text-sm"
-        >
-          <ArrowLeft className="mr-2 inline-block" />
-          <span
-            className="text-sm
-                group-hover:text-gray-400 transition-all duration-300
-                ease-in-out
-            "
-          >
-            Retour
-          </span>
-        </Link>
+        <ReturnButton />
 
         {/* URL */}
         <UrlPage />

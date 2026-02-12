@@ -1,14 +1,8 @@
 "use client";
 
+import { isCuid } from "@/utils/functions";
 import { usePathname } from "next/navigation";
 import React from "react";
-
-const isCuid = (value?: string) => {
-  if (!value) return false;
-
-  // regex cuid simple
-  return /^c[a-z0-9]{20,}$/i.test(value);
-};
 
 const UrlPage = () => {
   const pathname = usePathname();
