@@ -21,7 +21,7 @@ export async function GET(req: Request) {
           id: p.id,
           title: p.name === "..." || p.name === "" ? "No name" : p.name,
           description: p.description,
-          images: [p.image],
+          images: [p.image].filter(Boolean),
           category: p.category,
           type: p.type,
           price: p.price,
@@ -33,7 +33,7 @@ export async function GET(req: Request) {
           origin: p.origin,
         },
         shop: {
-          id: crypto.randomUUID(),
+          id: p.shopName + "-" + p.id,
           name: p.shopName,
           logo: p.shopLogo,
           contact: p.whatsapp,
